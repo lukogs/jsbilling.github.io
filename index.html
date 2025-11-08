@@ -127,7 +127,7 @@
       menuContainer.innerHTML = '';
       Object.entries(items).forEach(([name, info]) => {
         const div = document.createElement('div');
-        div.className = 'col-md-4 mb-3';
+        div.className = 'col-md-4 col-sm-2 mb-3';
         div.innerHTML = `
           <div class="menu-item">
             <img src="${info.image}" alt="${name}">
