@@ -16,14 +16,90 @@
     #billSection { background: white; border-radius: 10px; padding: 15px; box-shadow: 0 0 8px rgba(0,0,0,0.1); }
 
     /* 🧾 Thermal printer styling */
-    @media print {
+    /* 🧾 Thermal printer styling */
+@media print {
+    /* 1. Global visibility control (Keep original setup) */
+    body * { 
+        visibility: hidden; 
+    }
+    #billPrintArea, #billPrintArea * { 
+        visibility: visible; 
+    }
+
+    #billPrintArea {
+        position: absolute;
+        left: 0;
+        top: 0;
+        /* Width is good. Using 58mm as a standard narrow size. */
+        width: 58mm; 
+        
+        /* 💡 IMPROVEMENT: Reduce default browser margins on the main container */
+        margin: 0;
+        padding: 0;
+        
+        /* Font settings are good */
+        font-size: 11px; /* Slightly reduced for more content */
+        font-family: 'Consolas', 'Courier New', monospace;
+        line-height: 1.2; /* Tighter line spacing */
+        
+        /* 💡 IMPROVEMENT: Force black text on white background */
+        color: #000 !important;
+        background: #fff !important;
+    }
+
+    /* 2. Reset common element spacing */
+    h1, h2, h3, h4, p, ul, ol, li, div, table {
+        margin: 0 !important;
+        padding: 0 !important;
+        line-height: 1.2;
+    }
+
+    /* 3. Item List styling */
+    .list-group-item {
+        border: none;
+        /* Padding is now 0 due to general reset, but keep this specific class */
+        padding: 2px 0; 
+        
+        /* 💡 IMPROVEMENT: Use Flexbox for aligned item/price rows */
+        display: flex;
+        justify-content: space-between; /* Pushes item name and price to edges */
+    }
+
+    /* 4. Headers and Footers */
+    .print-header, .print-footer {
+        text-align: center;
+        border-bottom: 1px dashed #000;
+        margin-bottom: 4px;
+        padding-bottom: 4px;
+    }
+    .print-footer {
+        border-top: 1px dashed #000;
+        border-bottom: none;
+        margin-top: 6px;
+        padding-top: 4px;
+    }
+    
+    /* 5. Hide controls and main app elements (Keep original list, expanded) */
+    button, .form-check, .nav, .tab-content, .tab-pane, h3,
+    .modal-dialog, .btn, .alert, img:not(.logo) { 
+        display: none !important; 
+    }
+
+    /* 6. Ensure table cells (for item rows) don't add extra padding */
+    table, tr, td {
+        border-collapse: collapse;
+        padding: 0 !important;
+        line-height: 1.2;
+    }
+}
+    /* @media print {
       body * { visibility: hidden; }
       #billPrintArea, #billPrintArea * { visibility: visible; }
       #billPrintArea {
         position: absolute;
         left: 0;
         top: 0;
-        width: 58mm; /* suitable for 58mm roll; change to 80mm if needed */
+        width: 58mm; 
         font-size: 12px;
         font-family: monospace;
       }
@@ -46,7 +122,7 @@
       button, .form-check, .nav, .tab-content, .tab-pane, h3 {
         display: none !important;
       }
-    }
+    } */
   </style>
 </head>
 <body class="container py-4">
@@ -77,17 +153,22 @@
     <!-- Bill Section -->
     <div class="col-lg-4 h-100" id="billSection">
       <div id="billPrintArea">
-        <div class="print-header">
-          <h6><strong>Masters Food Stall</strong></h6>
+        <div class="print-header pb-1">
+          <p><strong>KM Restaurant</strong><br>Pariyangadu</p>
+          
           <div id="billDate"></div>
         </div>
-
-        <ul class="list-group mb-2" id="billList"></ul>
-
-        <div class="d-flex justify-content-between fs-6">
-          <strong>Total:</strong>
-          <span id="totalAmount" class="h3">₹0</span>
+        <div class="d-flex justify-content-between">
+          <span>Item</span><span>Amount</span>
         </div>
+        <ul class="list-group mb-2" id="billList"></ul>
+        <!-- <div class="print-header pb-1"> -->
+
+          <div class="d-flex justify-content-between fs-6">
+            <strong>Total:</strong>
+            <span id="totalAmount" class="h5">₹0</span>
+          </div>
+        <!-- </div> -->
 
         <div class="form-check mt-2 mb-2">
           <input class="form-check-input" type="checkbox" id="addParcel">
