@@ -1,0 +1,77 @@
+    /* 🧾 Thermal printer styling */
+@media print {
+    /* 1. Global visibility control (Keep original setup) */
+    body * { 
+        visibility: hidden; 
+    }
+    #billPrintArea, #billPrintArea * { 
+        visibility: visible; 
+    }
+
+    #billPrintArea {
+        position: absolute;
+
+        left: 0;
+        top: 0;
+        /* Width is good. Using 58mm as a standard narrow size. */
+        width: 58mm; 
+        
+        /* 💡 IMPROVEMENT: Reduce default browser margins on the main container */
+        margin: 0;
+        padding: 0;
+        
+        /* Font settings are good */
+        font-size: 12px; /* Slightly reduced for more content */
+        font-family: 'Consolas', 'Courier New', monospace;
+        line-height: 1.2; 
+        
+        /* 💡 IMPROVEMENT: Force black text on white background */
+        color: #000 !important;
+        background-color: #ee9b9b !important;
+    }
+
+    /* 2. Reset common element spacing */
+    h1, h2, h3, h4, p, ul, ol, li, div, table {
+        margin: 0 !important;
+        padding: 0 !important;
+        line-height: 1.2;
+    }
+
+    /* 3. Item List styling */
+    .list-group-item {
+        border: none;
+        /* Padding is now 0 due to general reset, but keep this specific class */
+        padding: 2px 0; 
+        
+        /* 💡 IMPROVEMENT: Use Flexbox for aligned item/price rows */
+        display: flex;
+        justify-content: space-between; /* Pushes item name and price to edges */
+    }
+
+    /* 4. Headers and Footers */
+    .print-header, .print-footer {
+        text-align: center;
+        border-bottom: 1px dashed #000;
+        margin-bottom: 4px;
+        padding-bottom: 4px;
+    }
+    .print-footer {
+        border-top: 1px dashed #000;
+        border-bottom: none;
+        margin-top: 6px;
+        padding-top: 4px;
+    }
+    
+    /* 5. Hide controls and main app elements (Keep original list, expanded) */
+    button, .form-check, .nav, .tab-content, .tab-pane, h3,
+    .modal-dialog, .btn, .alert, img:not(.logo) { 
+        display: none !important; 
+    }
+
+    /* 6. Ensure table cells (for item rows) don't add extra padding */
+    table, tr, td {
+        border-collapse: collapse;
+        padding: 0 !important;
+        line-height: 1.2;
+    }
+}
